@@ -51,7 +51,7 @@ const Chatrec = ({ messages, setMessages }) => {
     };
     return (
         <div className="flex flex-col lg:w-1/2 h-full bg-gradient-to-br from-yellow-100 via-green-200 to-green-300 p-2 sm:p-4 font-poppins transition-all duration-500 ease-in-out">
-            <div className="relative bg-gradient-to-r from-orange-600 to-yellow-500 text-white p-2 sm:p-3 text-lg sm:text-xl font-bold shadow-lg rounded-lg flex items-center justify-between">
+            <div className="relative bg-gradient-to-r from-green-600 to-yellow-500 text-white p-2 sm:p-3 text-lg sm:text-xl font-bold shadow-lg rounded-lg flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                     <img
                         src="/images/client1.jpg"
