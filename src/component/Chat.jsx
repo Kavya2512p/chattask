@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlineSend, AiOutlineDelete } from 'react-icons/ai';
 import { BsChatSquareDots } from 'react-icons/bs';
-import { MdBackup } from 'react-icons/md'; 
+import { MdBackup } from 'react-icons/md';
 
 const Chat = ({ messages, setMessages }) => {
     const [inputMessage, setInputMessage] = useState('');
     const [deletedMessages, setDeletedMessages] = useState([]);
 
-    
+
     useEffect(() => {
         const savedDeletedMessages = localStorage.getItem('deletedMessages');
         if (savedDeletedMessages) {
@@ -15,12 +15,12 @@ const Chat = ({ messages, setMessages }) => {
         }
     }, []);
 
-    
+
     useEffect(() => {
         localStorage.setItem('deletedMessages', JSON.stringify(deletedMessages));
     }, [deletedMessages]);
 
-    
+
     const handleSendMessage = () => {
         if (inputMessage.trim() === '') return;
 
@@ -38,50 +38,63 @@ const Chat = ({ messages, setMessages }) => {
         }, 1000);
     };
 
-    
+
     const receiveMessage = () => {
         setMessages((prevMessages) => [...prevMessages]);
     };
 
     const clearMessagesFromState = () => {
-        setDeletedMessages([...deletedMessages, ...messages]); 
-        setMessages([]); 
+        setDeletedMessages([...deletedMessages, ...messages]);
+        setMessages([]);
     };
 
     const restoreDeletedMessages = () => {
         if (deletedMessages.length > 0) {
             setMessages([...messages, ...deletedMessages]);
-            setDeletedMessages([]); 
+            setDeletedMessages([]);
         }
     };
 
     const deleteMessage = (indexToDelete) => {
         const messageToDelete = messages[indexToDelete];
-        setDeletedMessages([...deletedMessages, messageToDelete]); 
-        setMessages(messages.filter((_, index) => index !== indexToDelete)); 
+        setDeletedMessages([...deletedMessages, messageToDelete]);
+        setMessages(messages.filter((_, index) => index !== indexToDelete));
     };
 
     return (
         <div className="flex flex-col lg:w-1/2 h-full bg-gradient-to-br from-yellow-100 via-orange-200 to-orange-300 p-2 sm:p-4 font-poppins transition-all duration-500 ease-in-out">
-            <div className="relative bg-gradient-to-r from-orange-600 to-yellow-500 text-white p-2 sm:p-4 text-center text-lg sm:text-xl font-bold shadow-lg rounded-lg">
-                <BsChatSquareDots className="inline mr-2" /> Chat 1
-                
-                <button
-                    onClick={clearMessagesFromState}
-                    className="absolute top-2 right-12 text-white hover:text-red-500 transition-all duration-300 ease-in-out focus:outline-none"
-                    title="Clear Chat"
-                >
-                    <AiOutlineDelete className="text-2xl" />
-                </button>
+      <div className="relative bg-gradient-to-r from-orange-600 to-yellow-500 text-white p-2 sm:p-3 text-lg sm:text-xl font-bold shadow-lg rounded-lg flex items-center justify-between">
+    <div className="flex items-center space-x-2">
+        <img
+            src="../../public/images/client2.jpg"
+            alt="avatar"
+            className="w-8 h-8 sm:w-10 sm:h-10 object-cover rounded-full"
+        />
+        <BsChatSquareDots className="text-xl sm:text-2xl" />
+        <span>Shreya Sharma</span>
+    </div>
 
-                <button
-                    onClick={restoreDeletedMessages}
-                    className="absolute top-2 right-2 text-white hover:text-green-500 transition-all duration-300 ease-in-out focus:outline-none"
-                    title="Restore Deleted Messages"
-                >
-                    <MdBackup className="text-2xl" />
-                </button>
-            </div>
+    <div className="flex space-x-2">
+        <button
+            onClick={clearMessagesFromState}
+            className="text-white hover:text-red-500 transition-all duration-300 ease-in-out focus:outline-none"
+            title="Clear Chat"
+        >
+            <AiOutlineDelete className="text-xl" />
+        </button>
+
+        <button
+            onClick={restoreDeletedMessages}
+            className="text-white hover:text-green-500 transition-all duration-300 ease-in-out focus:outline-none"
+            title="Restore Deleted Messages"
+        >
+            <MdBackup className="text-xl" />
+        </button>
+    </div>
+</div>
+
+
+
 
             <div className="flex-grow overflow-y-auto p-2 sm:p-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 transition-all duration-300 ease-in-out">
                 {messages.length > 0 ? (
@@ -90,7 +103,7 @@ const Chat = ({ messages, setMessages }) => {
                             key={index}
                             className={`group flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                         >
-                            <div className="relative flex items-end space-x-2 max-w-full"> 
+                            <div className="relative flex items-end space-x-2 max-w-full">
                                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-400 flex items-center justify-center">
                                     <img
                                         src={message.sender === 'user' ? '../../public/images/client2.jpg' : '../../public/images/client1.jpg'}
@@ -103,18 +116,11 @@ const Chat = ({ messages, setMessages }) => {
                                         ? 'bg-gradient-to-r from-orange-400 to-yellow-400 text-white'
                                         : 'bg-gray-300 text-black'
                                         }`}
-                                    style={{ wordBreak: 'break-word' }} 
-                                > 
+                                    style={{ wordBreak: 'break-word' }}
+                                >
                                     <p>{message.text}</p>
                                     <span className="block text-xs sm:text-sm text-gray-500 mt-2">{message.timestamp}</span>
 
-                                    <button
-                                        onClick={() => deleteMessage(index)}
-                                        className="absolute bottom-1 right-1 p-1 text-red-500 hover:text-red-700 transition-all duration-300 ease-in-out focus:outline-none"
-                                        title="Delete Message"
-                                    >
-                                        <AiOutlineDelete className="text-lg" />
-                                    </button>
                                 </div>
                             </div>
                         </div>
