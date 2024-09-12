@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlineSend, AiOutlineDelete } from 'react-icons/ai';
 import { BsChatSquareDots } from 'react-icons/bs';
-import { MdBackup } from 'react-icons/md'; // Import Backup icon
+import { MdBackup } from 'react-icons/md'; 
 
 const Chat = ({ messages, setMessages }) => {
     const [inputMessage, setInputMessage] = useState('');
     const [deletedMessages, setDeletedMessages] = useState([]);
 
-    // Load deleted messages from localStorage when component mounts
+    
     useEffect(() => {
         const savedDeletedMessages = localStorage.getItem('deletedMessages');
         if (savedDeletedMessages) {
@@ -15,12 +15,12 @@ const Chat = ({ messages, setMessages }) => {
         }
     }, []);
 
-    // Save deleted messages to localStorage whenever it changes
+    
     useEffect(() => {
         localStorage.setItem('deletedMessages', JSON.stringify(deletedMessages));
     }, [deletedMessages]);
 
-    // Function to handle sending a message
+    
     const handleSendMessage = () => {
         if (inputMessage.trim() === '') return;
 
@@ -38,37 +38,34 @@ const Chat = ({ messages, setMessages }) => {
         }, 1000);
     };
 
-    // Dummy function for receiving a message
+    
     const receiveMessage = () => {
         setMessages((prevMessages) => [...prevMessages]);
     };
 
-    // Function to clear messages from state and save them to deleted messages
     const clearMessagesFromState = () => {
-        setDeletedMessages([...deletedMessages, ...messages]); // Store the deleted messages
-        setMessages([]); // Clear chat state
+        setDeletedMessages([...deletedMessages, ...messages]); 
+        setMessages([]); 
     };
 
-    // Function to restore deleted messages from localStorage back into messages state
     const restoreDeletedMessages = () => {
         if (deletedMessages.length > 0) {
             setMessages([...messages, ...deletedMessages]);
-            setDeletedMessages([]); // Clear deleted messages after restoring
+            setDeletedMessages([]); 
         }
     };
 
-    // Function to delete an individual message
     const deleteMessage = (indexToDelete) => {
         const messageToDelete = messages[indexToDelete];
-        setDeletedMessages([...deletedMessages, messageToDelete]); // Store the deleted message
-        setMessages(messages.filter((_, index) => index !== indexToDelete)); // Remove the message from the current chat
+        setDeletedMessages([...deletedMessages, messageToDelete]); 
+        setMessages(messages.filter((_, index) => index !== indexToDelete)); 
     };
 
     return (
         <div className="flex flex-col lg:w-1/2 h-full bg-gradient-to-br from-yellow-100 via-orange-200 to-orange-300 p-2 sm:p-4 font-poppins transition-all duration-500 ease-in-out">
             <div className="relative bg-gradient-to-r from-orange-600 to-yellow-500 text-white p-2 sm:p-4 text-center text-lg sm:text-xl font-bold shadow-lg rounded-lg">
                 <BsChatSquareDots className="inline mr-2" /> Chat 1
-                {/* Clear Chat Button */}
+                
                 <button
                     onClick={clearMessagesFromState}
                     className="absolute top-2 right-12 text-white hover:text-red-500 transition-all duration-300 ease-in-out focus:outline-none"
@@ -77,7 +74,6 @@ const Chat = ({ messages, setMessages }) => {
                     <AiOutlineDelete className="text-2xl" />
                 </button>
 
-                {/* Backup Button */}
                 <button
                     onClick={restoreDeletedMessages}
                     className="absolute top-2 right-2 text-white hover:text-green-500 transition-all duration-300 ease-in-out focus:outline-none"
@@ -94,7 +90,7 @@ const Chat = ({ messages, setMessages }) => {
                             key={index}
                             className={`group flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                         >
-                            <div className="relative flex items-end space-x-2 max-w-full"> {/* Add max-w-full to avoid overflow */}
+                            <div className="relative flex items-end space-x-2 max-w-full"> 
                                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-400 flex items-center justify-center">
                                     <img
                                         src={message.sender === 'user' ? '../../public/images/client2.jpg' : '../../public/images/client1.jpg'}
@@ -107,12 +103,11 @@ const Chat = ({ messages, setMessages }) => {
                                         ? 'bg-gradient-to-r from-orange-400 to-yellow-400 text-white'
                                         : 'bg-gray-300 text-black'
                                         }`}
-                                    style={{ wordBreak: 'break-word' }} // Ensure long text wraps inside the message box
+                                    style={{ wordBreak: 'break-word' }} 
                                 > 
                                     <p>{message.text}</p>
                                     <span className="block text-xs sm:text-sm text-gray-500 mt-2">{message.timestamp}</span>
 
-                                    {/* Delete Button at Bottom Right */}
                                     <button
                                         onClick={() => deleteMessage(index)}
                                         className="absolute bottom-1 right-1 p-1 text-red-500 hover:text-red-700 transition-all duration-300 ease-in-out focus:outline-none"

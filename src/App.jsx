@@ -5,7 +5,6 @@ import Chatrec from './component/Chatrec';
 function App() {
   const [messages, setMessages] = useState([]);
 
-  // Load messages from localStorage when the app loads
   useEffect(() => {
     const storedMessages = JSON.parse(localStorage.getItem('chatMessages'));
     if (storedMessages) {
@@ -13,7 +12,6 @@ function App() {
     }
   }, []);
 
-  // Save messages to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('chatMessages', JSON.stringify(messages));
   }, [messages]);

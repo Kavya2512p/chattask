@@ -39,21 +39,20 @@ const Chatrec = ({ messages, setMessages }) => {
     };
 
     const clearMessagesFromState = () => {
-        setDeletedMessages([...deletedMessages, ...messages]); // Store the deleted messages
-        setMessages([]); // Clear chat state
+        setDeletedMessages([...deletedMessages, ...messages]); 
+        setMessages([]);
     };
 
     const restoreDeletedMessages = () => {
         if (deletedMessages.length > 0) {
             setMessages([...messages, ...deletedMessages]);
-            setDeletedMessages([]); // Clear deleted messages after restoring
+            setDeletedMessages([]); 
         }
     };
     return (
         <div className="flex flex-col lg:w-1/2 h-full bg-gradient-to-br from-yellow-100 via-orange-200 to-orange-300 p-2 sm:p-4 font-poppins transition-all duration-500 ease-in-out">
             <div className="relative bg-gradient-to-r from-orange-600 to-yellow-500 text-white p-2 sm:p-4 text-center text-lg sm:text-xl font-bold shadow-lg rounded-lg">
                 <BsChatSquareDots className="inline mr-2" /> Chat 1
-                {/* Clear Chat Button */}
                 <button
                     onClick={clearMessagesFromState}
                     className="absolute top-2 right-12 text-white hover:text-red-500 transition-all duration-300 ease-in-out focus:outline-none"
@@ -62,7 +61,6 @@ const Chatrec = ({ messages, setMessages }) => {
                     <AiOutlineDelete className="text-2xl" />
                 </button>
 
-                {/* Backup Button */}
                 <button
                     onClick={restoreDeletedMessages}
                     className="absolute top-2 right-2 text-white hover:text-green-500 transition-all duration-300 ease-in-out focus:outline-none"
